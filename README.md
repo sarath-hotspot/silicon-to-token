@@ -10,7 +10,7 @@ performance.
 - [02-memory](cuda-labs/02-memory/README.md): explicit and unified memory with
   GPU and CPU computation timing.
 - [03-memory-transfers](cuda-labs/03-memory-transfers/README.md): pageable versus
-  pinned transfers, cold-buffer setup costs, and measured NVIDIA A40 graphs.
+  pinned transfers, cold-buffer setup costs. Experiments on at what buffer size it is worth using pinned vs oageable. 
 
 ## Build and test
 
