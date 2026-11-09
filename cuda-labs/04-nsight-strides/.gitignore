@@ -1,0 +1,6 @@
+/build/
+/build-*/
+/results/profiles/
+*.nsys-rep
+*.ncu-rep
+*.sqlite

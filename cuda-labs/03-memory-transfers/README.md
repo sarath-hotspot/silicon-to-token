@@ -1,5 +1,28 @@
 # Pageable versus pinned memory transfers
 
+## My notes / learnings
+
+- Pageable memory is ordinary CPU memory, like memory allocated by other
+  programs. The host OS can move its contents out of physical RAM to swap
+  when swap is available and memory pressure requires it.
+- When copying pageable data to the GPU, the CUDA driver may first copy it
+  into an internal **pinned buffer in host RAM**, not GPU memory. The GPU's
+  copy engine can then transfer it to device memory using **DMA (Direct
+  Memory Access)**, typically over PCIe. Some systems support CPU-GPU NVLink;
+  GPU-GPU NVLink does not automatically provide a host-memory transfer path.
+- Pinned (page-locked) memory is host RAM explicitly allocated with
+  `cudaMallocHost`, or existing host memory registered with `cudaHostRegister`.
+  The OS cannot swap those pages out while they are pinned.
+- Pinned buffers can be transferred directly by DMA without the extra pageable
+  staging copy. DMA is the transfer mechanism, not a kind of memory. The CPU
+  still fills the buffers and initiates the transfer through CUDA, but does
+  not copy each byte across the CPU-GPU link itself.
+- Pinning has an allocation/registration cost and ties up non-swappable RAM.
+  Too much pinned memory leaves less RAM for the OS and other programs, so
+  reusing pinned buffers is generally better than repeatedly allocating them.
+
+## Overview
+
 Compare ordinary pageable host buffers (`malloc`) with pinned, page-locked
 host buffers (`cudaMallocHost`). Both are CPU memory; the GPU buffer is allocated
 separately with `cudaMalloc`.

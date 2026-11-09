@@ -11,6 +11,8 @@ performance.
   GPU and CPU computation timing.
 - [03-memory-transfers](cuda-labs/03-memory-transfers/README.md): pageable versus
   pinned transfers, cold-buffer setup costs. Experiments on at what buffer size it is worth using pinned vs pageable. 
+- [04-nsight-strides](cuda-labs/04-nsight-strides/README.md): Nsight Systems and
+  Compute profiling of strides 1 through 5 with one block of 256 threads.
 
 ## Build and test
 
@@ -18,7 +20,7 @@ Requires a CUDA-capable NVIDIA GPU, a working driver, CUDA Toolkit, CMake
 3.24 or newer, and a supported host C++ compiler.
 
 ```bash
-for lab in 01-vector-add 02-memory 03-memory-transfers; do
+for lab in 01-vector-add 02-memory 03-memory-transfers 04-nsight-strides; do
   "./cuda-labs/$lab/build.sh"
   ctest --test-dir "./cuda-labs/$lab/build" --output-on-failure
 done
