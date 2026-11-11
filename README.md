@@ -3,6 +3,33 @@
 Hands-on CUDA labs for understanding GPU computation, memory, and transfer
 performance.
 
+## The stack: application to silicon
+
+```text
+┌──────────────────────────────────────────┐
+│ Applications                             │  Chat UI, API clients, agents
+├──────────────────────────────────────────┤
+│ Serving and inference engines            │  vLLM, SGLang: APIs, scheduling,
+│                                          │  batching, KV-cache management
+├──────────────────────────────────────────┤
+│ ML frameworks and GPU libraries          │  PyTorch, Transformers, cuBLAS
+├──────────────────────────────────────────┤
+│ GPU programming model and runtime        │  CUDA, memory and kernel launches
+├──────────────────────────────────────────┤
+│ GPU kernels                              │  Attention, matrix multiply, etc.
+├──────────────────────────────────────────┤
+│ Operating system and device drivers      │  Device access and command submission
+├──────────────────────────────────────────┤
+│ GPU hardware                             │  Compute units, Tensor Cores, HBM
+└──────────────────────────────────────────┘
+                     │
+                     └── generated tokens return to the application
+```
+
+This is a conceptual view: serving engines can use several frameworks and
+kernel backends, and some responsibilities span layers. These labs focus on
+the CUDA, kernel, memory-transfer, and profiling layers below.
+
 ## Labs
 
 - [01-vector-add](cuda-labs/01-vector-add/README.md): vector addition, grid-stride
